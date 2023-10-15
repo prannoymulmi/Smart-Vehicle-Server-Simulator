@@ -4,13 +4,13 @@ import requests
 
 
 
-url = 'https://server:5000/data'  # Replace with the URL you want to POST to
+url = 'https://localhost:5000/data'  # Replace with the URL you want to POST to
 
 data = {
     'GPS': '12',
     'USER': 'test user'
 }
-response = requests.get('https://server:5000', verify=False)
+response = requests.get('https://localhost:5000', verify=False)
 print(response.text)
 headers = {'Content-Type': 'application/json'}
 
