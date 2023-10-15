@@ -6,7 +6,6 @@ services:
       context: ./server
     ports:
       - "5000:5000"
-
   smart-vehicle:
     build:
       context: ./smart-vehicle

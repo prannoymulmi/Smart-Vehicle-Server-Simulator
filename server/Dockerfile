@@ -2,7 +2,7 @@
 
 FROM python:3.8-slim-buster
 
-WORKDIR /python-docker
+WORKDIR /app
 
 COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
@@ -10,5 +10,7 @@ RUN pip3 install -r requirements.txt
 ENV PYTHONUNBUFFERED=1
 
 COPY . .
+COPY key.pem key.pem
+COPY cert.pem cert.pem
 
 CMD ["python", "main.py"]
