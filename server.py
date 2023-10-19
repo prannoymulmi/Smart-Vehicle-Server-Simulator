@@ -27,6 +27,5 @@ def start_server():
                 conn.sendall(b'Authentication failed')
                 conn.close()
 
-
 if __name__ == "__main__":
     start_server()

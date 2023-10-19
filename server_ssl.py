@@ -6,7 +6,7 @@ SECRET = 'my_secret_password'  # Both the client and server should have this
 
 def start_server():
     HOST = 'localhost'
-    PORT = 65432
+    PORT = 65433
 
     # Create a socket and bind it
     bind_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -23,8 +23,12 @@ def start_server():
 
     data = conn.recv(1024).decode()
     if data == SECRET:
-        conn.sendall(b'Authentication successful')
-        # Handle authenticated client
+        conn.send("AUTH_SUCCESS".encode())
+        # Now you can handle other requests
+        data = conn.recv(1024).decode()
+        if data == "GET_DATA":
+            conn.send("Here's your data!".encode())
+        conn.close()
     else:
         conn.sendall(b'Authentication failed')
         conn.close()
