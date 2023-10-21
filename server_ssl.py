@@ -1,7 +1,15 @@
 import socket
 import ssl
 
+from argon2 import PasswordHasher
+from argon2.exceptions import VerifyMismatchError
+from argon2.profiles import RFC_9106_HIGH_MEMORY, RFC_9106_LOW_MEMORY
+
 SECRET = 'my_secret_password'  # Both the client and server should have this
+
+# hashes the password into argon2id with random salt
+# Using the first recommendation per RFC 9106 with High memory.
+HASHED_SECRET = '$argon2id$v=19$m=2097152,t=1,p=4$vT7UexZFsNYigbn2flmJRg$yIOPV3spwnNUIvfFb4B7EMSDh31E3u2C5DOc7Kplljs'
 
 
 def start_server():
@@ -22,18 +30,23 @@ def start_server():
     print("Connected by", addr)
 
     data = conn.recv(1024).decode()
-    if data == SECRET:
+    if check_if_password_is_correct(data, HASHED_SECRET):
         conn.send("AUTH_SUCCESS".encode())
         # Now you can handle other requests
         data = conn.recv(1024).decode()
         if data == "GET_DATA":
-            conn.send("Here's your data!".encode())
+            conn.sendall("Here's your data!".encode())
         conn.close()
     else:
         conn.sendall(b'Authentication failed')
         conn.close()
 
-    conn.close()
+def check_if_password_is_correct(input_pass, hashed_pass) -> bool:
+    ph = PasswordHasher().from_parameters(RFC_9106_HIGH_MEMORY)
+    try:
+        return ph.verify(hashed_pass, input_pass)
+    except VerifyMismatchError:
+        return False
 
 
 if __name__ == "__main__":

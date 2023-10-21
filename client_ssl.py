@@ -22,6 +22,8 @@ def start_client():
                 secure_socket.send("GET_DATA".encode())
                 data = secure_socket.recv(1024).decode()
                 print(f"Received data: {data}")
+            else:
+                print(f"Received data: {response}")
         secure_socket.close()
     client_socket.close()
 
