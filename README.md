@@ -18,7 +18,7 @@ and implements it into two applications server and smart-vehicle.
   ### Test for Man-in-the-middle
     * Two test scenarios were applied where the client-server connection was in plain text and the other encrypted with
       its corresponding certificates.
-      Wireshark as a tool was used to intercept the data packets during communications.
+      Wireshark as a tool was used to intercept the data packets during communications and packets were inspected using TCP Stream function (Wireshark (n.d.)).
       Legend :
 
     * | Host | Port | Description | Protocol | Figure |
@@ -35,3 +35,7 @@ and implements it into two applications server and smart-vehicle.
       Figure X shows that the TCP stream between the client and server is in encrypted form and the connection is not in
       clear text strengthening our
       communication against MITM attacks.
+
+
+# Reference
+Wireshark (n.d.) 6.5.2. The “Follow TCP Stream” dialog box. Available from: https://www.wireshark.org/docs/wsug_html_chunked/ChAdvFollowStreamSection.html (Accessed: [21 Oct 2023])
