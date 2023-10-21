@@ -12,7 +12,26 @@ This project delves into the hypothesis
 communicating with the server**
 and implements it into two applications server and smart-vehicle.
 
-# Mitigations applied
+### Passwordless Authentication Analysis
+
+### Generated private and public keys for passwordless authentication
+In order to carry out passwordless authentication a symmetric key-based protocol (public and private key) for a
+passwordless authentication. This method of symmetric authentication (passwordless) is straightforward and is resilient to many
+known attacks like Man-in-the-Middle, and brute-force attacks (Bruce, N. and Lee, H.J., 2014). 
+
+````bash
+## How to generate keys for passwordless authentication Source (OpenSSL Project, 2021)
+openssl genpkey -algorithm RSA -out client_private_key.pem
+openssl pkey -in client_private_key.pem -pubout -out client_public_key.pem
+````
+
+#### Issue for passwordless
+However, one of the main challenges for this
+type of authentication is the size of the certificates/keys which have a rather complex structure and is resource intensive, which would create
+difficulties in processing and verifying them as the IoT devices have very limited resources (Schukat, M. and Cortijo, P., 2015).
+
+
+# Additional Mitigations applied
 
 * Use of secure encrypted protocols like SSL to transmit the data between client and the server.
   ### Test for Man-in-the-middle
@@ -38,4 +57,7 @@ and implements it into two applications server and smart-vehicle.
 
 
 # Reference
-Wireshark (n.d.) 6.5.2. The “Follow TCP Stream” dialog box. Available from: https://www.wireshark.org/docs/wsug_html_chunked/ChAdvFollowStreamSection.html (Accessed: [21 Oct 2023])
+* Bruce, N. and Lee, H.J., 2014, February. Cryptographic computation of private shared key based mutual authentication protocol: Simulation and modeling over wireless networks. In The International Conference on Information Networking 2014 (ICOIN2014) (pp. 578-582). IEEE.
+* OpenSSL Project, 2021. OpenSSL Man Pages: Version 3.1. OpenSSL Software Foundation. Available from: https://www.openssl.org/docs/man3.1/man1/ [Accessed 19 October 2023].
+* Schukat, M. and Cortijo, P., 2015, June. Public key infrastructures and digital certificates for the Internet of things. In 2015 26th Irish signals and systems conference (ISSC) (pp. 1-5). IEEE.
+* Wireshark (n.d.) 6.5.2. The “Follow TCP Stream” dialog box. Available from: https://www.wireshark.org/docs/wsug_html_chunked/ChAdvFollowStreamSection.html (Accessed: [21 Oct 2023])
