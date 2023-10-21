@@ -24,7 +24,7 @@ def start_server():
 
     # Wrap the socket using SSL
     context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-    context.load_cert_chain(certfile='server_cert.pem', keyfile='server_key.pem')
+    context.load_cert_chain(certfile='ssl/server_cert.pem', keyfile='ssl/server_key.pem')
 
     conn, addr = context.wrap_socket(bind_socket, server_side=True).accept()
     print("Connected by", addr)
