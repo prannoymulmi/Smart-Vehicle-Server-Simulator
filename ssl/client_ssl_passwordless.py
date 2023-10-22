@@ -5,6 +5,9 @@ from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 
 def start_client():
+    """
+    SSL source code <a href=https://docs.python.domainunion.de/3/library/ssl.html />
+    """
     HOST = 'localhost'
     PORT = 65434
 

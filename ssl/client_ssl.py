@@ -5,6 +5,9 @@ SECRET = 'my_secret_password'
 
 
 def start_client():
+    """
+    SSL source code <a href=https://docs.python.domainunion.de/3/library/ssl.html />
+    """
     HOST = 'localhost'
     PORT = 65433
 

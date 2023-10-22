@@ -13,6 +13,9 @@ HASHED_SECRET = '$argon2id$v=19$m=2097152,t=1,p=4$vT7UexZFsNYigbn2flmJRg$yIOPV3s
 
 
 def start_server():
+    """
+    SSL source code <a href=https://docs.python.domainunion.de/3/library/ssl.html />
+    """
     HOST = 'localhost'
     PORT = 65433
 
