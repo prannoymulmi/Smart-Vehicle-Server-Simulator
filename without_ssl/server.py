@@ -1,5 +1,7 @@
 import socket
-
+"""
+Unsecured version of client and server communication done in plain text.
+"""
 SECRET = 'my_secret_password'  # Both the client and server should have this
 
 
