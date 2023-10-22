@@ -28,7 +28,10 @@ def start_server():
         conn, addr = context.wrap_socket(bind_socket, server_side=True).accept()
         print("Connected by", addr)
 
-        # Send a unique challenge to the client.
+        """
+        Send a unique challenge to the client. This uses a more secure random entropy sources to make the value more unpredictable
+        Source <a href=https://docs.python.org/3/library/os.html#os.urandom
+        """
         challenge = os.urandom(32)
         conn.send(challenge)
 

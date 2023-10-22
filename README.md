@@ -73,9 +73,10 @@ difficulties in processing and verifying them as the IoT devices have very limit
 
 # Additional Mitigations applied
 
+### SSL/TLS
 * Use of secure encrypted protocols like SSL to transmit the data between client and the server. This is achieved by using the TLS/SSL
 wrapper provided by python which uses the TLSv1.3 with OpenSSL v1.1.1 (Python Software Foundation, 2023).
-  ### Test for Man-in-the-middle
+  #### Test for Man-in-the-middle
     * Two test scenarios were applied where the client-server connection was in plain text and the other encrypted with
       its corresponding certificates.
       Wireshark as a tool was used to intercept the data packets during communications and packets were inspected using TCP Stream function (Wireshark (n.d.)).
@@ -98,10 +99,15 @@ wrapper provided by python which uses the TLSv1.3 with OpenSSL v1.1.1 (Python So
 * **Note: The certificates generated here are just for testing purposes and are self-signed which can be compromised and should not 
 be used to secure devices instead use a validated certificate from a trusted source.**
 
+### Use of Challenge–Response Authentication
+The code uses additional security measures such as random challenge sent to the client and back to the server to which creates a unique
+session between the two parties and even if the data is intercepted, the data cannot be reused as the server also expects the random challenge, protecting it 
+from various attacks like replay-attacks (Kushwaha et al. 2021).
 
 # Reference
 * Biryukov, A., Dinu, D., & Khovratovich, D. (2021). The Memory-Hard Argon2 Password Hash Function. RFC 9106. IETF. Available from: https://datatracker.ietf.org/doc/rfc9106/
 * Bruce, N. and Lee, H.J., 2014, February. Cryptographic computation of private shared key based mutual authentication protocol: Simulation and modeling over wireless networks. In The International Conference on Information Networking 2014 (ICOIN2014) (pp. 578-582). IEEE.
+* Kushwaha, P., Sonkar, H., Altaf, F. and Maity, S., 2021. A brief survey of challenge–response authentication mechanisms. ICT Analysis and Applications: Proceedings of ICT4SD 2020, Volume 2, pp.573-581.
 * OpenSSL Project, 2021. OpenSSL Man Pages: Version 3.1. OpenSSL Software Foundation. Available from: https://www.openssl.org/docs/man3.1/man1/ [Accessed 19 October 2023].
 * Python Software Foundation, 2023. ssl — TLS/SSL wrapper for socket objects. Available at: https://docs.python.domainunion.de/3/library/ssl.html [Accessed 22 October 2023].
 * Schukat, M. and Cortijo, P., 2015, June. Public key infrastructures and digital certificates for the Internet of things. In 2015 26th Irish signals and systems conference (ISSC) (pp. 1-5). IEEE.
