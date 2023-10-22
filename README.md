@@ -70,6 +70,8 @@ However, one of the main challenges for this
 type of authentication is the size of the certificates/keys which have a rather complex structure and is resource intensive, which would create
 difficulties in processing and verifying them as the IoT devices have very limited resources (Schukat, M. and Cortijo, P., 2015).
 
+## Conclusion
+
 
 # Additional Mitigations applied
 
@@ -103,9 +105,10 @@ be used to secure devices instead use a validated certificate from a trusted sou
 The code uses additional security measures such as random challenge sent to the client and back to the server to which creates a unique
 session between the two parties and even if the data is intercepted, the data cannot be reused as the server also expects the random challenge, protecting it 
 from various attacks like replay-attacks (Kushwaha et al. 2021).
-
 ![alt text](docs/cram.png)
 (Kushwaha et al. 2021)
+#### Testing
+
 # Reference
 * Biryukov, A., Dinu, D., & Khovratovich, D. (2021). The Memory-Hard Argon2 Password Hash Function. RFC 9106. IETF. Available from: https://datatracker.ietf.org/doc/rfc9106/
 * Bruce, N. and Lee, H.J., 2014, February. Cryptographic computation of private shared key based mutual authentication protocol: Simulation and modeling over wireless networks. In The International Conference on Information Networking 2014 (ICOIN2014) (pp. 578-582). IEEE.
