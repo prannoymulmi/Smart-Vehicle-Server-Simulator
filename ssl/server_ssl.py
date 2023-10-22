@@ -32,7 +32,7 @@ def start_server():
 
     # Loading certificate and running TLS server as a server
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-    context.load_cert_chain(certfile='ssl/server_cert.pem', keyfile='ssl/server_key.pem')
+    context.load_cert_chain(certfile='server_cert.pem', keyfile='server_key.pem')
 
     conn, addr = context.wrap_socket(bind_socket, server_side=True).accept()
     print("Connected by", addr)
