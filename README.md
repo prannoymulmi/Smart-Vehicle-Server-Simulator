@@ -73,6 +73,12 @@ difficulties in processing and verifying them as the IoT devices have very limit
 
 ## Conclusion
 
+# Testing
+### Code Quality test using Ruff
+Ruff is used as a linter for Python that helps to identify problematic areas in your code following PEP8 standards, aiming to keep the quality of the code to high standards by suggesting best practices.
+
+![alt text](docs/lint.png)
+Figure X shows the linting errors ruff found during the check. 
 
 # Additional Mitigations applied
 
