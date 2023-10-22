@@ -14,13 +14,18 @@ HASHED_SECRET = '$argon2id$v=19$m=2097152,t=1,p=4$vT7UexZFsNYigbn2flmJRg$yIOPV3s
 
 def start_server():
     """
-    SSL source code <a href=https://docs.python.domainunion.de/3/library/ssl.html />
+        SSL source code <a href=https://docs.python.domainunion.de/3/library/ssl.html />
     """
     HOST = 'localhost'
     PORT = 65433
 
     # Create a socket and bind it
     bind_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    """
+        TCP has a TIME_WAIT sate by the os for a period of time. See <a href=https://en.wikipedia.org/wiki/Transmission_Control_Protocol#Protocol_operation />
+        To over come this SO_REUSEADDR is used to bind immediately to the port again 
+    """
+    bind_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     bind_socket.bind((HOST, PORT))
     bind_socket.listen(5)
     print("Server listening...")
