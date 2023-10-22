@@ -5,9 +5,10 @@ import ssl
 from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 
-
-
 def start_server():
+    """
+    SSL source code <a href=https://docs.python.domainunion.de/3/library/ssl.html />
+    """
     # Load the client's public key. In a real scenario, you'd securely manage and store these.
     with open("client_public_key.pem", "rb") as key_file:
         client_public_key = serialization.load_pem_public_key(key_file.read())
@@ -20,8 +21,8 @@ def start_server():
         bind_socket.listen(5)
         print("Server listening...")
 
-        # Wrap the socket using SSL
-        context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+        # Loading certificate and running TLS server as a server
+        context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
         context.load_cert_chain(certfile='server_cert.pem', keyfile='server_key.pem')
 
         conn, addr = context.wrap_socket(bind_socket, server_side=True).accept()

@@ -22,8 +22,8 @@ def start_server():
     bind_socket.listen(5)
     print("Server listening...")
 
-    # Wrap the socket using SSL
-    context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+    # Loading certificate and running TLS server as a server
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
     context.load_cert_chain(certfile='ssl/server_cert.pem', keyfile='ssl/server_key.pem')
 
     conn, addr = context.wrap_socket(bind_socket, server_side=True).accept()

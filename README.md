@@ -33,7 +33,8 @@ difficulties in processing and verifying them as the IoT devices have very limit
 
 # Additional Mitigations applied
 
-* Use of secure encrypted protocols like SSL to transmit the data between client and the server.
+* Use of secure encrypted protocols like SSL to transmit the data between client and the server. This is achieved by using the TLS/SSL
+wrapper provided by python which uses the TLSv1.3 with OpenSSL v1.1.1 (Python Software Foundation, 2023).
   ### Test for Man-in-the-middle
     * Two test scenarios were applied where the client-server connection was in plain text and the other encrypted with
       its corresponding certificates.
@@ -54,10 +55,13 @@ difficulties in processing and verifying them as the IoT devices have very limit
       Figure X shows that the TCP stream between the client and server is in encrypted form and the connection is not in
       clear text strengthening our
       communication against MITM attacks.
+* **Note: The certificates generated here are just for testing purposes and are self-signed which can be compromised and should not 
+be used to secure devices instead use a validated certificate from a trusted source.**
 
 
 # Reference
 * Bruce, N. and Lee, H.J., 2014, February. Cryptographic computation of private shared key based mutual authentication protocol: Simulation and modeling over wireless networks. In The International Conference on Information Networking 2014 (ICOIN2014) (pp. 578-582). IEEE.
 * OpenSSL Project, 2021. OpenSSL Man Pages: Version 3.1. OpenSSL Software Foundation. Available from: https://www.openssl.org/docs/man3.1/man1/ [Accessed 19 October 2023].
+* Python Software Foundation, 2023. ssl — TLS/SSL wrapper for socket objects. Available at: https://docs.python.domainunion.de/3/library/ssl.html [Accessed 22 October 2023].
 * Schukat, M. and Cortijo, P., 2015, June. Public key infrastructures and digital certificates for the Internet of things. In 2015 26th Irish signals and systems conference (ISSC) (pp. 1-5). IEEE.
 * Wireshark (n.d.) 6.5.2. The “Follow TCP Stream” dialog box. Available from: https://www.wireshark.org/docs/wsug_html_chunked/ChAdvFollowStreamSection.html (Accessed: [21 Oct 2023])
