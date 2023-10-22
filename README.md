@@ -80,6 +80,13 @@ Ruff is used as a linter for Python that helps to identify problematic areas in 
 ![alt text](docs/lint.png)
 Figure X shows the linting errors ruff found during the check. 
 
+### Bandit
+Bandit is a security linter which is designed to scan and find common security issues in 
+python code (Lopen, J. 2023). The figure below shows some issues that Bandit discovered such as plain text 
+passwords which has then been mitigated by using hashed password to instead of plain text passwords.
+
+![alt text](docs/bandit.png)
+
 # Additional Mitigations applied
 
 ### SSL/TLS
@@ -120,6 +127,7 @@ from various attacks like replay-attacks (Kushwaha et al. 2021).
 * Biryukov, A., Dinu, D., & Khovratovich, D. (2021). The Memory-Hard Argon2 Password Hash Function. RFC 9106. IETF. Available from: https://datatracker.ietf.org/doc/rfc9106/
 * Bruce, N. and Lee, H.J., 2014, February. Cryptographic computation of private shared key based mutual authentication protocol: Simulation and modeling over wireless networks. In The International Conference on Information Networking 2014 (ICOIN2014) (pp. 578-582). IEEE.
 * Kushwaha, P., Sonkar, H., Altaf, F. and Maity, S., 2021. A brief survey of challenge–response authentication mechanisms. ICT Analysis and Applications: Proceedings of ICT4SD 2020, Volume 2, pp.573-581.
+* Lopen, J. (2023) Bandit - A security linter from PyCQA. Available from: https://bandit.readthedocs.io/en/latest/start.html (Accessed: 22 October 2023).
 * OpenSSL Project, 2021. OpenSSL Man Pages: Version 3.1. OpenSSL Software Foundation. Available from: https://www.openssl.org/docs/man3.1/man1/ [Accessed 19 October 2023].
 * Python Software Foundation, 2023. ssl — TLS/SSL wrapper for socket objects. Available at: https://docs.python.domainunion.de/3/library/ssl.html [Accessed 22 October 2023].
 * Schukat, M. and Cortijo, P., 2015, June. Public key infrastructures and digital certificates for the Internet of things. In 2015 26th Irish signals and systems conference (ISSC) (pp. 1-5). IEEE.
