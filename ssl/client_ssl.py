@@ -1,5 +1,9 @@
+import os
 import socket
 import ssl
+import cProfile
+
+import psutil
 
 SECRET = 'my_secret_password'
 
@@ -13,7 +17,7 @@ def start_client():
 
     # Create a context for the secure connection
     context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
-    context.load_verify_locations('server_cert.pem')  # Load the server's certificate to verify it
+    context.load_verify_locations('ssl/server_cert.pem')  # Load the server's certificate to verify it
 
     # Wrap the socket in the SSL context
     with socket.create_connection((HOST, PORT)) as client_socket:
@@ -31,4 +35,8 @@ def start_client():
     client_socket.close()
 
 if __name__ == "__main__":
+    process = psutil.Process(os.getpid())
     start_client()
+    cpu_usage = process.cpu_percent(interval=0.001)
+    memory_info = process.memory_info()
+    print(f"CPU: {cpu_usage}%, Memory: {memory_info.rss / (1024 * 1024)} MB")

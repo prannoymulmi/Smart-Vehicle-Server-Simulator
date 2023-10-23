@@ -1,5 +1,7 @@
+import os
 import socket
 import ssl
+import psutil
 
 from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.primitives.asymmetric import padding
@@ -48,4 +50,8 @@ def start_client():
         client_socket.close()
 
 if __name__ == "__main__":
+    process = psutil.Process(os.getpid())
     start_client()
+    cpu_usage = process.cpu_percent(interval=0.001)
+    memory_info = process.memory_info()
+    print(f"CPU: {cpu_usage}%, Memory: {memory_info.rss / (1024 * 1024)} MB")
