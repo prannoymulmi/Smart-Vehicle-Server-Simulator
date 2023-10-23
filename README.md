@@ -71,6 +71,31 @@ However, one of the main challenges for this
 type of authentication is the size of the certificates/keys which have a rather complex structure and is resource intensive, which would create
 difficulties in processing and verifying them as the IoT devices have very limited resources (Schukat, M. and Cortijo, P., 2015).
 
+## Experiments
+To check our hypothesis, we carried two experiments, one for cpu and memory and the next brute forcing. The main
+reason to carry out the resource profiling is to see if the passwordless does take more resources than the password 
+authentication.
+
+* Memory and CPU measurement for client-server authentication using passwordless
+![alt text](docs/passwordless_profiling.png)
+
+* Memory and CPU measurement for client-server authentication using password
+![alt text](docs/password_profiling.png)
+
+``` python
+if __name__ == "__main__":
+    # Utilizing psutil to get the resource utilization of the function
+    process = psutil.Process(os.getpid())
+    start_client()
+    cpu_usage = process.cpu_percent(interval=0.001)
+    memory_info = process.memory_info()
+    print(f"CPU: {cpu_usage}%, Memory: {memory_info.rss / (1024 * 1024)} MB")
+```
+
+From the first experiment we can observe that the passwordless authentication takes more memory about 68% more than
+the password authentication and the CPU usage is almost the same. So this proves that the passwordless variant with 
+certificates consume more resources and can be issues for IoTs for cars with very limited resources.
+
 ## Conclusion
 
 # Testing
