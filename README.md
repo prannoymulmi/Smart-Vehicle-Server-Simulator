@@ -55,10 +55,9 @@ HASHED_SECRET = '$argon2id$v=19$m=2097152,t=1,p=4$vT7UexZFsNYigbn2flmJRg$yIOPV3s
 
 ### Passwordless Authentication Analysis
 ### Generated private and public keys for passwordless authentication
-In order to carry out passwordless authentication a symmetric key-based protocol (public and private key) for a
-passwordless authentication. This method of symmetric authentication (passwordless) is straightforward and is resilient to many
-known attacks like Man-in-the-Middle, and brute-force attacks (Bruce, N. and Lee, H.J., 2014). This method provides a simple
-way for authentication which would be feasible for most low-resourced IoT devices.
+To carry out passwordless authentication a symmetric key-based protocol (public and private key) is used for a
+passwordless authentication. This symmetric authentication (passwordless) method is straightforward and resilient to many
+known attacks like Man-in-the-Middle and brute-force attacks (Bruce, N. and Lee, H.J., 2014). This method provides a simple authentication method, which would be feasible for most low-resourced IoT devices.
 
 ````bash
 ## How to generate keys for passwordless authentication Source (OpenSSL Project, 2021)
@@ -68,12 +67,12 @@ openssl pkey -in client_private_key.pem -pubout -out client_public_key.pem
 
 #### Issue for passwordless
 However, one of the main challenges for this
-type of authentication is the size of the certificates/keys which have a rather complex structure and is resource intensive, which would create
-difficulties in processing and verifying them as the IoT devices have very limited resources (Schukat, M. and Cortijo, P., 2015).
+type of authentication is the size of the certificates/keys, which have a rather complex structure and is resource intensive, which would create
+difficulties processing and verifying them as IoT devices have minimal resources (Schukat, M. and Cortijo, P., 2015).
 
 ## Experiments
-To check our hypothesis, we carried two experiments, one for cpu and memory and the next brute forcing. The main
-reason to carry out the resource profiling is to see if the passwordless does take more resources than the password 
+To check our hypothesis, we conducted two experiments, one for CPU and memory and the following brute forcing. The main
+reason to carry out the resource profiling using psutil (Psutil 2023) is to see if the passwordless does take more resources than the password 
 authentication.
 
 * Memory and CPU measurement for client-server authentication using passwordless
@@ -92,9 +91,9 @@ if __name__ == "__main__":
     print(f"CPU: {cpu_usage}%, Memory: {memory_info.rss / (1024 * 1024)} MB")
 ```
 
-From the first experiment we can observe that the passwordless authentication takes more memory about 68% more than
-the password authentication and the CPU usage is almost the same. So this proves that the passwordless variant with 
-certificates consume more resources and can be issues for IoTs for cars with very limited resources.
+From the first experiment, we can observe that passwordless authentication takes about 68% more memory than
+password authentication, and the CPU usage is almost the same. This result proves that the passwordless variant with 
+certificates consumes more resources and can be an issue for IoTs for cars with minimal resources.
 
 ## Conclusion
 
@@ -152,8 +151,9 @@ from various attacks like replay-attacks (Kushwaha et al. 2021).
 * Biryukov, A., Dinu, D., & Khovratovich, D. (2021). The Memory-Hard Argon2 Password Hash Function. RFC 9106. IETF. Available from: https://datatracker.ietf.org/doc/rfc9106/
 * Bruce, N. and Lee, H.J., 2014, February. Cryptographic computation of private shared key based mutual authentication protocol: Simulation and modeling over wireless networks. In The International Conference on Information Networking 2014 (ICOIN2014) (pp. 578-582). IEEE.
 * Kushwaha, P., Sonkar, H., Altaf, F. and Maity, S., 2021. A brief survey of challenge–response authentication mechanisms. ICT Analysis and Applications: Proceedings of ICT4SD 2020, Volume 2, pp.573-581.
-* Lopen, J. (2023) Bandit - A security linter from PyCQA. Available from: https://bandit.readthedocs.io/en/latest/start.html (Accessed: 22 October 2023).
+* Lopen, J. 2023 Bandit - A security linter from PyCQA. Available from: https://bandit.readthedocs.io/en/latest/start.html (Accessed: 22 October 2023).
 * OpenSSL Project, 2021. OpenSSL Man Pages: Version 3.1. OpenSSL Software Foundation. Available from: https://www.openssl.org/docs/man3.1/man1/ [Accessed 19 October 2023].
+* Psutil 2023. Python Package Index (Psutil). Available from: https://pypi.org/project/psutil/ [Accessed 22 October 2023].
 * Python Software Foundation, 2023. ssl — TLS/SSL wrapper for socket objects. Available at: https://docs.python.domainunion.de/3/library/ssl.html [Accessed 22 October 2023].
 * Schukat, M. and Cortijo, P., 2015, June. Public key infrastructures and digital certificates for the Internet of things. In 2015 26th Irish signals and systems conference (ISSC) (pp. 1-5). IEEE.
 * Wireshark (n.d.) 6.5.2. The “Follow TCP Stream” dialog box. Available from: https://www.wireshark.org/docs/wsug_html_chunked/ChAdvFollowStreamSection.html (Accessed: [21 Oct 2023])
