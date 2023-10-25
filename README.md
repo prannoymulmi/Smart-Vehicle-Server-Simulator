@@ -25,6 +25,46 @@ pip3 -V
 # Install all required dependencies
 pip3 install -r requirements.txt 
 ```
+### How to run the code
+Running server client without SSL
+```bash
+# To start server without ssl 
+cd without_ssl
+python server.py
+```
+
+```bash
+# To start server without ssl 
+cd without_ssl
+python client.py
+```
+
+Running server client with SSL and using password authentication
+```bash
+# To start server without ssl 
+cd ssl
+python server_ssl.py
+```
+
+```bash
+# To start server without ssl 
+cd ssl
+python client_ssl.py
+```
+
+Running server client with SSL and using passwordless authentication
+```bash
+# To start server without ssl 
+cd ssl
+python server_ssl_passwordless.py
+```
+
+```bash
+# To start server without ssl 
+cd ssl
+python client_ssl_passwordless.py
+```
+
 Python applications which simulates the communication between a smart car and a cloud server the data-flow-diagram show
 the system which this project is trying to simulate.
 
@@ -138,7 +178,6 @@ wrapper provided by python which uses the TLSv1.3 with OpenSSL v1.1.1 (Python So
       communication against MITM attacks.
 * **Note: The certificates generated here are just for testing purposes and are self-signed which can be compromised and should not 
 be used to secure devices instead use a validated certificate from a trusted source.**
-
 ### Use of Challenge–Response Authentication Mechanism
 The code uses additional security measures such as random challenge sent to the client and back to the server to which creates a unique
 session between the two parties and even if the data is intercepted, the data cannot be reused as the server also expects the random challenge, protecting it 
