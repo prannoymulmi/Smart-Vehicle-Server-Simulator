@@ -15,6 +15,11 @@ def start_server():
         print("Server listening...")
 
         conn, addr = s.accept()
+        """
+            TCP has a TIME_WAIT sate by the os for a period of time. See <a href=https://en.wikipedia.org/wiki/Transmission_Control_Protocol#Protocol_operation />
+            To over come this SO_REUSEADDR is used to bind immediately to the port again 
+        """
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         with conn:
             print("Connected by", addr)
 

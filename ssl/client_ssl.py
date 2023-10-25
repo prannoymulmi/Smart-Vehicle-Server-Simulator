@@ -5,7 +5,7 @@ import cProfile
 
 import psutil
 
-SECRET = 'my_secret_password'
+SECRET = 'easypass'
 
 
 def start_client():
