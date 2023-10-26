@@ -115,6 +115,7 @@ To check our hypothesis, we conducted two experiments, one for CPU and memory an
 reason to carry out the resource profiling using psutil (Psutil 2023) is to see if the passwordless does take more resources than the password 
 authentication.
 
+### Resource Profiling
 * Memory and CPU measurement for client-server authentication using passwordless
 ![alt text](docs/passwordless_profiling.png)
 
@@ -135,7 +136,36 @@ From the first experiment, we can observe that passwordless authentication takes
 password authentication, and the CPU usage is almost the same. This result proves that the passwordless variant with 
 certificates consumes more resources and can be an issue for IoTs for cars with minimal resources.
 
+### Credential Stuffing simulation
+A simulation of the 
+credential stuffing brute-force attack is done to show the vulnerability of the password authentication. Using this simulation, it can be
+concluded that easy or default passwords are easy to break into, as many
+databases and common passwords are on the web (Miessler, D. 2018). Using a default and common password makes
+password authentication extremely vulnerable to brute-force attacks (Knieriem et al., 2018).
+
+* Result of the simulation of a simple credential stuffing attack for the client to get its data.
+![alt text](docs/credential_stuffing.png)
+
+``` python
+# Snippet of the credential stuffing simulation of a small dictonary which has common passwords
+def credential_stuffing_attack():
+    dictionary = ['password', '123456', 'strong_password', 'password123', 'qwerty', 'easypass']
+    print("Starting credential stuffing simulation")
+```
+
 ## Conclusion
+In conclusion, carrying the two experiments, it can be concluded that passwordless
+authentication using certificates are more secure than password, given they are used and
+appropriately stored, i.e. HSM module in IoT, as it is harder to carry out brute-force attacks
+easily as for password authentication, especially when they are weak.
+
+In contrast, password authentication is more efficient to use when the client has
+limited resources, as passwordless authentication with certificates uses more computing
+power. 
+
+Therefore, password authentication is recommended for low-powered devices such as IoT; however, they should be strong passwords that are not easily guessable.
+Nevertheless, if the smart car client possesses enough computing power, passwordless authentication with certificates
+provides better security.
 
 # Testing
 ### Code Quality test using Ruff
@@ -189,8 +219,10 @@ from various attacks like replay-attacks (Kushwaha et al. 2021).
 # Reference
 * Biryukov, A., Dinu, D., & Khovratovich, D. (2021). The Memory-Hard Argon2 Password Hash Function. RFC 9106. IETF. Available from: https://datatracker.ietf.org/doc/rfc9106/
 * Bruce, N. and Lee, H.J., 2014, February. Cryptographic computation of private shared key based mutual authentication protocol: Simulation and modeling over wireless networks. In The International Conference on Information Networking 2014 (ICOIN2014) (pp. 578-582). IEEE.
+* Knieriem, B., Zhang, X., Levine, P., Breitinger, F. and Baggili, I., 2018. An overview of the usage of default passwords. In Digital Forensics and Cyber Crime: 9th International Conference, ICDF2C 2017, Prague, Czech Republic, October 9-11, 2017, Proceedings 9 (pp. 195-203). Springer International Publishing.
 * Kushwaha, P., Sonkar, H., Altaf, F. and Maity, S., 2021. A brief survey of challenge–response authentication mechanisms. ICT Analysis and Applications: Proceedings of ICT4SD 2020, Volume 2, pp.573-581.
 * Lopen, J. 2023 Bandit - A security linter from PyCQA. Available from: https://bandit.readthedocs.io/en/latest/start.html (Accessed: 22 October 2023).
+* Miessler, D. 2018. 10-million-password-list-top-100000.txt. SecLists. Available from: https://github.com/danielmiessler/SecLists/blob/master/Passwords/Common-Credentials/10-million-password-list-top-100000.txt (Accessed: Day Month Year).
 * OpenSSL Project, 2021. OpenSSL Man Pages: Version 3.1. OpenSSL Software Foundation. Available from: https://www.openssl.org/docs/man3.1/man1/ [Accessed 19 October 2023].
 * Psutil 2023. Python Package Index (Psutil). Available from: https://pypi.org/project/psutil/ [Accessed 22 October 2023].
 * Python Software Foundation, 2023. ssl — TLS/SSL wrapper for socket objects. Available at: https://docs.python.domainunion.de/3/library/ssl.html [Accessed 22 October 2023].

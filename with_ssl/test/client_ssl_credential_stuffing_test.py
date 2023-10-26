@@ -4,17 +4,18 @@ import ssl
 SECRET = 'my_secret_password'
 
 """
-This test is an experiment with a hypothetical scenario that a dictionary attack is carried out
+Simple simulation of a possible credential stuffing attacks for regular passwords
+Source <a href=https://owasp.org/www-community/attacks/Credential_stuffing />
 """
-def brute_force_dictionary_attack():
+def credential_stuffing_attack():
     dictionary = ['password', '123456', 'strong_password', 'password123', 'qwerty', 'easypass']
+    print("Starting credential stuffing simulation")
     for password in dictionary:  # trying from a list of dictionary of weak default passwords
-        print(password)
         """
         SSL source code <a href=https://docs.python.domainunion.de/3/library/ssl.html />
         """
         HOST = 'localhost'
-        PORT = 65435
+        PORT = 65433
 
         # Create a context for the secure connection
         context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
@@ -28,13 +29,16 @@ def brute_force_dictionary_attack():
                 # Receive auth response
                 response = secure_socket.recv(1024).decode()
                 if response == "AUTH_SUCCESS":
+                    print("Authentication Success")
+                    print(f'stuffed password: {password}')
                     secure_socket.send("GET_DATA".encode())
                     data = secure_socket.recv(1024).decode()
                     print(f"Received data: {data}")
                 else:
+                    print(f'stuffed password: {password}')
                     print(f"Received data: {response}")
             secure_socket.close()
         client_socket.close()
 
 if __name__ == "__main__":
-    brute_force_dictionary_attack()
+    credential_stuffing_attack()
