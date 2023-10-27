@@ -42,26 +42,26 @@ python client.py
 Running server client with SSL and using password authentication
 ```bash
 # To start server without ssl 
-cd ssl
+cd with_ssl
 python server_ssl.py
 ```
 
 ```bash
 # To start server without ssl 
-cd ssl
+cd with_ssl
 python client_ssl.py
 ```
 
 Running server client with SSL and using passwordless authentication
 ```bash
 # To start server without ssl 
-cd ssl
+cd with_ssl
 python server_ssl_passwordless.py
 ```
 
 ```bash
 # To start server without ssl 
-cd ssl
+cd with_ssl
 python client_ssl_passwordless.py
 ```
 
@@ -101,6 +101,7 @@ known attacks like Man-in-the-Middle and brute-force attacks (Bruce, N. and Lee,
 
 ````bash
 ## How to generate keys for passwordless authentication Source (OpenSSL Project, 2021)
+## This generates a 2048 bits length key
 openssl genpkey -algorithm RSA -out client_private_key.pem
 openssl pkey -in client_private_key.pem -pubout -out client_public_key.pem
 ````
@@ -114,6 +115,8 @@ difficulties processing and verifying them as IoT devices have minimal resources
 To check our hypothesis, we conducted two experiments, one for CPU and memory and the following brute forcing. The main
 reason to carry out the resource profiling using psutil (Psutil 2023) is to see if the passwordless does take more resources than the password 
 authentication.
+
+Due to the fact that th
 
 ### Resource Profiling
 * Memory and CPU measurement for client-server authentication using passwordless
@@ -143,6 +146,9 @@ concluded that easy or default passwords are easy to break into, as many
 databases and common passwords are on the web (Miessler, D. 2018). Using a default and common password makes
 password authentication extremely vulnerable to brute-force attacks (Knieriem et al., 2018).
 
+Running the brute fore experiment with the RSA-2048 is currently not possible due to the fact
+it needs extreme resources and time to crack the RSA key with a bit length of 2048.
+
 * Result of the simulation of a simple credential stuffing attack for the client to get its data.
 ![alt text](docs/credential_stuffing.png)
 
@@ -152,7 +158,11 @@ def credential_stuffing_attack():
     dictionary = ['password', '123456', 'strong_password', 'password123', 'qwerty', 'easypass']
     print("Starting credential stuffing simulation")
 ```
-
+From this experiment, it can be said that passwords can be less secure as people use weak or shared passwords, which can
+be brute forced using such a credential-stuffing attack. However, a key using an algorithm like RSA-2048 bits
+generates very hard-to-crack keys, which would make the authentication process more secure if the suitable algorithm
+and in comparison to passwords, it is less likely that different clients use duplicate keys as they are usually randomly
+anonymized X.509 certificates (Oniga et al. 2018).
 ## Conclusion
 In conclusion, carrying the two experiments, it can be concluded that passwordless
 authentication using certificates are more secure than password, given they are used and
@@ -165,7 +175,9 @@ power.
 
 Therefore, password authentication is recommended for low-powered devices such as IoT; however, they should be strong passwords that are not easily guessable.
 Nevertheless, if the smart car client possesses enough computing power, passwordless authentication with certificates
-provides better security.
+provides better security. In addition to that the strong passwords must be used and for the certificates
+the proper key algorithm and key length should be used i.e., RSA-2048 stored in a
+secure storage like a HSM in an IoT device.
 
 # Testing
 ### Code Quality test using Ruff
@@ -214,7 +226,7 @@ session between the two parties and even if the data is intercepted, the data ca
 from various attacks like replay-attacks (Kushwaha et al. 2021).
 ![alt text](docs/cram.png)
 (Kushwaha et al. 2021)
-#### Testing
+
 
 # Reference
 * Biryukov, A., Dinu, D., & Khovratovich, D. (2021). The Memory-Hard Argon2 Password Hash Function. RFC 9106. IETF. Available from: https://datatracker.ietf.org/doc/rfc9106/
@@ -223,6 +235,7 @@ from various attacks like replay-attacks (Kushwaha et al. 2021).
 * Kushwaha, P., Sonkar, H., Altaf, F. and Maity, S., 2021. A brief survey of challenge–response authentication mechanisms. ICT Analysis and Applications: Proceedings of ICT4SD 2020, Volume 2, pp.573-581.
 * Lopen, J. 2023 Bandit - A security linter from PyCQA. Available from: https://bandit.readthedocs.io/en/latest/start.html (Accessed: 22 October 2023).
 * Miessler, D. 2018. 10-million-password-list-top-100000.txt. SecLists. Available from: https://github.com/danielmiessler/SecLists/blob/master/Passwords/Common-Credentials/10-million-password-list-top-100000.txt (Accessed: Day Month Year).
+* Oniga, B., Farr, S.H., Munteanu, A. and Dadarlat, V., 2018, October. Iot infrastructure secured by tls level authentication and pki identity system. In 2018 Second World Conference on Smart Trends in Systems, Security and Sustainability (WorldS4) (pp. 78-83). IEEE.
 * OpenSSL Project, 2021. OpenSSL Man Pages: Version 3.1. OpenSSL Software Foundation. Available from: https://www.openssl.org/docs/man3.1/man1/ [Accessed 19 October 2023].
 * Psutil 2023. Python Package Index (Psutil). Available from: https://pypi.org/project/psutil/ [Accessed 22 October 2023].
 * Python Software Foundation, 2023. ssl — TLS/SSL wrapper for socket objects. Available at: https://docs.python.domainunion.de/3/library/ssl.html [Accessed 22 October 2023].
