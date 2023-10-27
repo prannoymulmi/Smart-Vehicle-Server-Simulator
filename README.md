@@ -139,7 +139,7 @@ From the first experiment, we can observe that passwordless authentication takes
 password authentication, and the CPU usage is almost the same. This result proves that the passwordless variant with 
 certificates consumes more resources and can be an issue for IoTs for cars with minimal resources.
 
-### Credential Stuffing simulation
+### Credential Stuffing Simulation
 A simulation of the 
 credential stuffing brute-force attack is done to show the vulnerability of the password authentication. Using this simulation, it can be
 concluded that easy or default passwords are easy to break into, as many
