@@ -227,6 +227,18 @@ from various attacks like replay-attacks (Kushwaha et al. 2021).
 ![alt text](docs/cram.png)
 (Kushwaha et al. 2021)
 
+``` python
+# Receive the challenge from the server
+challenge = secure_socket.recv(1024)
+
+# Sign the challenge
+signature = private_key.sign(
+    challenge,
+    padding.PSS(mgf=padding.MGF1(hashes.SHA256()), salt_length=padding.PSS.MAX_LENGTH),
+    hashes.SHA256()
+)
+```
+
 
 # Reference
 * Biryukov, A., Dinu, D., & Khovratovich, D. (2021). The Memory-Hard Argon2 Password Hash Function. RFC 9106. IETF. Available from: https://datatracker.ietf.org/doc/rfc9106/
