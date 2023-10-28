@@ -41,26 +41,26 @@ python client.py
 
 Running server client with SSL and using password authentication
 ```bash
-# To start server without ssl 
+# To start server with ssl 
 cd with_ssl
 python server_ssl.py
 ```
 
 ```bash
-# To start server without ssl 
+# To start server with ssl 
 cd with_ssl
 python client_ssl.py
 ```
 
 Running server client with SSL and using passwordless authentication
 ```bash
-# To start server without ssl 
+# To start server with ssl 
 cd with_ssl
 python server_ssl_passwordless.py
 ```
 
 ```bash
-# To start server without ssl 
+# To start server with ssl 
 cd with_ssl
 python client_ssl_passwordless.py
 ```
@@ -96,7 +96,7 @@ HASHED_SECRET = '$argon2id$v=19$m=2097152,t=1,p=4$vT7UexZFsNYigbn2flmJRg$yIOPV3s
 ### Passwordless Authentication Analysis
 ### Generated private and public keys for passwordless authentication
 To carry out passwordless authentication a symmetric key-based protocol (public and private key) is used for a
-passwordless authentication. This symmetric authentication (passwordless) method is straightforward and resilient to many
+passwordless authentication. This asymmetric authentication (passwordless) method is straightforward and resilient to many
 known attacks like Man-in-the-Middle and brute-force attacks (Bruce, N. and Lee, H.J., 2014). This method provides a simple authentication method, which would be feasible for most low-resourced IoT devices.
 
 ````bash
