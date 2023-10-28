@@ -72,15 +72,17 @@ the system which this project is trying to simulate.
 ![alt text](docs/DFD.png)
 Figure 1: DFD Diagram
 
+Figure 1 shows the communication between the client (which includes different components in the smart vehicles) and server (cloud). The data from the different components are communicated through the wireless connection to the server in the cloud. The data received from the smart vehicles is processed in the cloud.  
+
 ## Hypothesis
 
 This project delves into the hypothesis: 
 ```
 Is it more secure and effective to use passwords or use passwordless authentication to
-communicate with the server.
+communicate with the server?
 ```
-
-### Using Password as a means of authentication
+## Analysis
+### Password Authentication
 The python file ```server_ssl.py``` mimics the server as shown in the DFD in Figure 1, which stores the password in an 
 hashed format using Argon2-id algorithm using RFC 9106 with High memory recommended parameters, that is resistant to GPU-based attacks
 , rainbow-table and side-channel attacks (Biryukov, A., Dinu, D, 2016).
@@ -91,10 +93,10 @@ hashed format using Argon2-id algorithm using RFC 9106 with High memory recommen
 HASHED_SECRET = '$argon2id$v=19$m=2097152,t=1,p=4$vT7UexZFsNYigbn2flmJRg$yIOPV3spwnNUIvfFb4B7EMSDh31E3u2C5DOc7Kplljs'
 ```
 #### Issue for password authentication
+Due to the greater connectivity of the IoT devices, it poses great challenge in the scalability in terms of the use of the password-based authentication. The connected nature of the IoT devices and each device requesting for authentication through password to the cloud and other devices makes 
+it hard to scale at large connected systems (SecureIDNews, 2015).
 
-
-### Passwordless Authentication Analysis
-### Generated private and public keys for passwordless authentication
+### Passwordless Authentication
 To carry out passwordless authentication a symmetric key-based protocol (public and private key) is used for a
 passwordless authentication. This asymmetric authentication (passwordless) method is straightforward and resilient to many
 known attacks like Man-in-the-Middle and brute-force attacks (Bruce, N. and Lee, H.J., 2014). This method provides a simple authentication method, which would be feasible for most low-resourced IoT devices.
@@ -115,7 +117,6 @@ difficulties processing and verifying them as IoT devices have minimal resources
 To check our hypothesis, we conducted two experiments, one for CPU and memory and the following brute forcing. The main
 reason to carry out the resource profiling using psutil (Psutil 2023) is to see if the passwordless does take more resources than the password 
 authentication.
-
 
 
 ### Resource Profiling
@@ -163,8 +164,9 @@ be brute forced using such a credential-stuffing attack. However, a key using an
 generates very hard-to-crack keys, which would make the authentication process more secure if the suitable algorithm
 and in comparison to passwords, it is less likely that different clients use duplicate keys as they are usually randomly
 anonymized X.509 certificates (Oniga et al. 2018).
+
 ## Conclusion
-In conclusion, carrying the two experiments, it can be concluded that passwordless
+By carrying the two experiments (refer to word document), it can be concluded that passwordless
 authentication using certificates are more secure than password, given they are used and
 appropriately stored, i.e. HSM module in IoT, as it is harder to carry out brute-force attacks
 easily as for password authentication, especially when they are weak.
@@ -179,65 +181,6 @@ provides better security. In addition to that the strong passwords must be used 
 the proper key algorithm and key length should be used i.e., RSA-2048 stored in a
 secure storage like a HSM in an IoT device.
 
-# Testing
-### Code Quality test using Ruff
-Ruff is used as a linter for Python that helps to identify problematic areas in your code following PEP8 standards, aiming to keep the quality of the code to high standards by suggesting best practices.
-
-![alt text](docs/lint.png)
-Figure X shows the linting errors ruff found during the check. 
-
-### Bandit
-Bandit is a security linter which is designed to scan and find common security issues in 
-python code (Lopen, J. 2023). The figure below shows some issues that Bandit discovered such as plain text 
-passwords which has then been mitigated by using hashed password to instead of plain text passwords.
-
-![alt text](docs/bandit.png)
-
-# Additional Mitigations applied
-
-### SSL/TLS
-* Use of secure encrypted protocols like SSL to transmit the data between client and the server. This is achieved by using the TLS/SSL
-wrapper provided by python which uses the TLSv1.3 with OpenSSL v1.1.1 (Python Software Foundation, 2023).
-  #### Test for Man-in-the-middle
-    * Two test scenarios were applied where the client-server connection was in plain text and the other encrypted with
-      its corresponding certificates.
-      Wireshark as a tool was used to intercept the data packets during communications and packets were inspected using TCP Stream function (Wireshark (n.d.)).
-      Legend :
-
-    * | Host | Port | Description | Protocol | Figure |
-      |-----------------------|-------|-------------|----------|--------|
-      | localhost (127.0.0.1) | 65431 | Uencrpyted  | TCP | 1 |
-      | localhost (127.0.0.1) | 65433 | Encrypted   | TCP | 2 |
-
-     ![alt text](docs/unecrypted_wireshark.png)
-      Figure X shows that the TCP stream between the client and server is in clear text and MITM attacks can be easily
-      carried out.
-  
-* 
-     ![alt text](docs/encrypted_wireshark.png)
-      Figure X shows that the TCP stream between the client and server is in encrypted form and the connection is not in
-      clear text strengthening our
-      communication against MITM attacks.
-* **Note: The certificates generated here are just for testing purposes and are self-signed which can be compromised and should not 
-be used to secure devices instead use a validated certificate from a trusted source.**
-### Use of Challenge–Response Authentication Mechanism
-The code uses additional security measures such as random challenge sent to the client and back to the server to which creates a unique
-session between the two parties and even if the data is intercepted, the data cannot be reused as the server also expects the random challenge, protecting it 
-from various attacks like replay-attacks (Kushwaha et al. 2021).
-![alt text](docs/cram.png)
-(Kushwaha et al. 2021)
-
-``` python
-# Receive the challenge from the server
-challenge = secure_socket.recv(1024)
-
-# Sign the challenge
-signature = private_key.sign(
-    challenge,
-    padding.PSS(mgf=padding.MGF1(hashes.SHA256()), salt_length=padding.PSS.MAX_LENGTH),
-    hashes.SHA256()
-)
-```
 
 
 # Reference
@@ -245,11 +188,11 @@ signature = private_key.sign(
 * Bruce, N. and Lee, H.J., 2014, February. Cryptographic computation of private shared key based mutual authentication protocol: Simulation and modeling over wireless networks. In The International Conference on Information Networking 2014 (ICOIN2014) (pp. 578-582). IEEE.
 * Knieriem, B., Zhang, X., Levine, P., Breitinger, F. and Baggili, I., 2018. An overview of the usage of default passwords. In Digital Forensics and Cyber Crime: 9th International Conference, ICDF2C 2017, Prague, Czech Republic, October 9-11, 2017, Proceedings 9 (pp. 195-203). Springer International Publishing.
 * Kushwaha, P., Sonkar, H., Altaf, F. and Maity, S., 2021. A brief survey of challenge–response authentication mechanisms. ICT Analysis and Applications: Proceedings of ICT4SD 2020, Volume 2, pp.573-581.
-* Lopen, J. 2023 Bandit - A security linter from PyCQA. Available from: https://bandit.readthedocs.io/en/latest/start.html (Accessed: 22 October 2023).
-* Miessler, D. 2018. 10-million-password-list-top-100000.txt. SecLists. Available from: https://github.com/danielmiessler/SecLists/blob/master/Passwords/Common-Credentials/10-million-password-list-top-100000.txt (Accessed: Day Month Year).
+* Lopen, J. 2023 Bandit - A security linter from PyCQA. Available from: https://bandit.readthedocs.io/en/latest/start.html [Accessed 23 October 2023].
+* Miessler, D. 2018. 10-million-password-list-top-100000.txt. SecLists. Available from: https://github.com/danielmiessler/SecLists/blob/master/Passwords/Common-Credentials/10-million-password-list-top-100000.txt [Accessed 23 October 2023].
 * Oniga, B., Farr, S.H., Munteanu, A. and Dadarlat, V., 2018, October. Iot infrastructure secured by tls level authentication and pki identity system. In 2018 Second World Conference on Smart Trends in Systems, Security and Sustainability (WorldS4) (pp. 78-83). IEEE.
 * OpenSSL Project, 2021. OpenSSL Man Pages: Version 3.1. OpenSSL Software Foundation. Available from: https://www.openssl.org/docs/man3.1/man1/ [Accessed 19 October 2023].
-* Psutil 2023. Python Package Index (Psutil). Available from: https://pypi.org/project/psutil/ [Accessed 22 October 2023].
-* Python Software Foundation, 2023. ssl — TLS/SSL wrapper for socket objects. Available at: https://docs.python.domainunion.de/3/library/ssl.html [Accessed 22 October 2023].
+* Python Software Foundation, 2023. ssl — TLS/SSL wrapper for socket objects. Available from: https://docs.python.domainunion.de/3/library/ssl.html [Accessed 22 October 2023].
+* SecureIDNews. (2015). Authentication in the IOT - challenges and opportunities, SecureIDNews. Available from: https://www.secureidnews.com/news-item/authentication-in-the-iot-challenges-and-opportunities/ [Accessed 24 October 2023].
 * Schukat, M. and Cortijo, P., 2015, June. Public key infrastructures and digital certificates for the Internet of things. In 2015 26th Irish signals and systems conference (ISSC) (pp. 1-5). IEEE.
 * Wireshark (n.d.) 6.5.2. The “Follow TCP Stream” dialog box. Available from: https://www.wireshark.org/docs/wsug_html_chunked/ChAdvFollowStreamSection.html (Accessed: [21 Oct 2023])
