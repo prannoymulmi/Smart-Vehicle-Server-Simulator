@@ -34,7 +34,7 @@ python server.py
 ```
 
 ```bash
-# To start server without ssl 
+# To start client without ssl 
 cd without_ssl
 python client.py
 ```
@@ -47,7 +47,7 @@ python server_ssl.py
 ```
 
 ```bash
-# To start server with ssl 
+# To start client with ssl 
 cd with_ssl
 python client_ssl.py
 ```
@@ -60,7 +60,7 @@ python server_ssl_passwordless.py
 ```
 
 ```bash
-# To start server with ssl 
+# To start client with ssl 
 cd with_ssl
 python client_ssl_passwordless.py
 ```
