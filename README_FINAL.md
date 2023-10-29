@@ -86,11 +86,6 @@ communicate with the server?
 The python file ```server_ssl.py``` mimics the server as shown in the DFD in Figure 1,
 which stores the password in a hashed format using Argon2-id algorithm using RFC 9106 with High memory recommended parameters, that is resistant to GPU-based attacks, rainbow-table and side-channel attacks (Biryukov, A., Dinu, D, 2016).
 
-```python
-# hashes the password into argon2id with random salt
-# Using the first recommendation per RFC 9106 with High memory.
-HASHED_SECRET = '$argon2id$v=19$m=2097152,t=1,p=4$vT7UexZFsNYigbn2flmJRg$yIOPV3spwnNUIvfFb4B7EMSDh31E3u2C5DOc7Kplljs'
-```
 #### Issue for password authentication
 Due to the greater connectivity of the IoT devices, it poses great challenge in the scalability in terms of the use of the password-based authentication. The connected nature of the IoT devices and each device requesting for authentication through password to the cloud and other devices makes 
 it hard to scale at large connected systems (SecureIDNews, 2015).
