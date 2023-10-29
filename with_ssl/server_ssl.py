@@ -50,6 +50,7 @@ def start_server():
                     conn.sendall("Here's your data!".encode())
                 conn.close()
             else:
+                print("Authentication failed")
                 conn.sendall(b'Authentication failed')
                 conn.close()
         except SSLError:

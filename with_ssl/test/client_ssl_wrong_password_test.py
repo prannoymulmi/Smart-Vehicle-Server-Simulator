@@ -1,17 +1,15 @@
-import os
 import socket
 import ssl
 
-import psutil
+password = "WORNG_PASS"
+
 
 """
-This is just for testing purposes, such passwords will be stored in a secure device such as a HSM
-Source <a href=https://www.entrust.com/resources/hsm/faq/what-are-hardware-security-modules />
+Simple simulation of a possible credential stuffing attacks for regular passwords
+Source <a href=https://owasp.org/www-community/attacks/Credential_stuffing />
 """
-SECRET = 'easypass'
-
-
-def start_client():
+def wrong_password_test():
+    print("Starting wrong password test")
     """
     SSL source code <a href=https://docs.python.domainunion.de/3/library/ssl.html />
     """
@@ -20,15 +18,17 @@ def start_client():
 
     # Create a context for the secure connection
     context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
-    context.load_verify_locations(os.path.basename('/server_cert.pem'))  # Load the server's certificate to verify it
+    context.load_verify_locations('../server_cert.pem')  # Load the server's certificate to verify it
 
     # Wrap the socket in the SSL context
     with socket.create_connection((HOST, PORT)) as client_socket:
         with context.wrap_socket(client_socket, server_hostname=HOST) as secure_socket:
-            secure_socket.send(SECRET.encode())
+            secure_socket.send(password.encode())
+
             # Receive auth response
             response = secure_socket.recv(1024).decode()
             if response == "AUTH_SUCCESS":
+                print("Authentication Success")
                 secure_socket.send("GET_DATA".encode())
                 data = secure_socket.recv(1024).decode()
                 print(f"Received data: {data}")
@@ -38,8 +38,4 @@ def start_client():
     client_socket.close()
 
 if __name__ == "__main__":
-    process = psutil.Process(os.getpid())
-    start_client()
-    cpu_usage = process.cpu_percent(interval=0.001)
-    memory_info = process.memory_info()
-    print(f"CPU: {cpu_usage}%, Memory: {memory_info.rss / (1024 * 1024)} MB")
+    wrong_password_test()
